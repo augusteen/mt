@@ -1,0 +1,14 @@
+<md-content class="md-whiteframe-z2" ng-cloak>
+<table class="mdl-cell mdl-cell--12-col mdl-data-table mdl-js-data-table mdl-shadow--2dp" ng-controller="tableController">
+    <thead>
+        <tr>
+            <th ng-repeat="header in enabledHeaders" ng-class="{'mdl-data-table__cell--non-numeric': header.type == 'text'}">{{header.title}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in $ctrl.json.data">
+            <td ng-repeat="header in enabledHeaders" ng-class="{'mdl-data-table__cell--non-numeric': header.type == 'text'}">{{item[header.key]}}</td>
+        </tr>
+    </tbody>
+</table>
+</md-content>

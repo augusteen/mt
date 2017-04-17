@@ -1,0 +1,77 @@
+<!--   <form name="loginForm" >
+<div class="centeritems mdl-grid">
+    <div class="mdl-layout-spacer"></div>
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+        <main class="mdl-layout__content">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--12-col">
+                    <h4>Login</h4>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing">
+                  
+                        <div class="mdl-cell mdl-cell--10-col">
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <input id="sgid" ng-model="$ctrl.user.sgid" class="mdl-textfield__input" type="text" />
+                                <label class="mdl-textfield__label" for="sgid">SGID</label>
+                            </div>
+                            <div id="emailError" class="login-error"></div>
+                        </div>
+                        <!-- 
+                <md-input-container>
+                    <label>SGID</label>
+                    <input ng-model="$ctrl.user.username">
+                </md-input-container> -->
+<!--  <div class="mdl-cell mdl-cell--10-col">
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <input ng-model="$ctrl.user.password" id="password" class="mdl-textfield__input" type="password" />
+                                <label class="mdl-textfield__label" for="password">Password</label>
+                            </div>
+                            <div id="passwordError" class="login-error"></div>
+                        </div> -->
+<!-- <md-input-container>
+                                <label>Password</label>
+                                <input ng-model="$ctrl.user.password" type="password">
+                            </md-input-container> -->
+<!-- </md-input-container>                <md-input-container layout-align="center center"> -->
+<!-- <div class="mdl-cell mdl-cell--10-col">
+                            <button id="login" type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" ng-disabled="loginForm.$invalid" ng-click="$ctrl.submitForm();">
+                                Login
+                            </button>
+                        </div> -->
+<!--           </div>
+            </div>
+        </main>
+    </div>
+    <div class="mdl-layout-spacer"></div>
+</div>
+</form> -->
+<div layout="row" layout-align="center center">
+    <div flex>
+        <md-content flex id="content" style="background-color: transparent;">
+            <div layout="row" layout-align="center center" layout-fill style="min-height: 500px">
+                <md-whiteframe class="md-whiteframe-24dp" style="background-color: white;" ng-submit="$ctrl.submitForm();" layout="column" flex="30" layout-padding>
+                    <form name="loginForm">
+                        <md-content md-theme="docs-dark" layout-fill style="overflow: hidden;">
+                            <div layout="column">
+                                <md-input-container>
+                                    <label>SGID</label>
+                                    <input ng-model="$ctrl.user.sgid">
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>Password</label>
+                                    <input ng-model="$ctrl.user.password" type="password">
+                                </md-input-container>
+                            </div>
+                            <div layout="row" layout-sm="row" layout-margin>
+                            <span flex></span>
+                                <md-input-container layout-align="center center">
+                                    <md-button class="md-raised md-primary" type="submit" flex-sm="100">Login</md-button>
+                                </md-input-container>
+                            </div>
+                        </md-content>
+                    </form>
+                </md-whiteframe>
+            </div>
+        </md-content>
+    </div>
+    <div>

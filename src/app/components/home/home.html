@@ -1,0 +1,54 @@
+<md-toolbar role="toolbar">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" toggle-sidenav aria-label="Menu">
+            <md-icon>menu</md-icon>
+        </md-button>
+        <h4 class="md-title">Home</h4>
+        <span flex></span>
+    </div>
+    </div>
+</md-toolbar>
+<section id="home" role="content" ng-show="viewHome" layout="column" layout-padding>
+    <md-content class="md-whiteframe-z2" ng-cloak>
+        <table md-table multiple ng-model="selected" md-progress="promise">
+            <thead md-head md-order="query.order" md-on-reorder="getProject">
+                <tr md-row>
+                    <th md-column>Project</th>
+                    <th md-column ng-repeat="wk in projectweek">{{getWeekNumber(wk)}}</th>
+                </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row md-select-id="name" md-auto-select ng-repeat="item in project">
+                    <td md-cell>{{item.Name}}</td>
+                    <td md-cell ng-repeat="wk in projectweek">
+                        {{(item.week[wk]).toFixed(0)}}
+                        <span ng-if="item.week[wk] > 0">%</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </md-content>
+  
+</section>
+
+<section id="home" role="content" ng-show="viewHome" layout="column" layout-padding>
+  <md-content class="md-whiteframe-z2" ng-cloak>
+        <table md-table multiple ng-model="selected" md-progress="promise">
+            <thead md-head md-order="query.order" md-on-reorder="getProject">
+                <tr md-row>
+                    <th md-column>User</th>
+                    <th md-column ng-repeat="wk in week">{{getWeekNumber(wk)}}</th>
+                </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row md-select-id="name" md-auto-select ng-repeat="time in timecard">
+                    <td md-cell>{{time.Name}}</td>
+                    <td md-cell ng-repeat="wk in week">
+                        {{(time.week[wk]).toFixed(0)}}
+                        <span ng-if="time.week[wk] > 0">%</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </md-content>
+</section>

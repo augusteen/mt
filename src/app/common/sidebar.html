@@ -1,0 +1,47 @@
+<!-- Simple header with scrollable tabs. -->
+<!-- <div>
+<header upgrade-element class="custom-header mdl-layout__header mdl-layout__header--waterfall">
+    <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">Management Tool</span>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" ui-sref="app.user" ui-sref-active="active" href="">User</a>
+            <a class="mdl-navigation__link" ui-sref="app.project" ui-sref-active="active" href="">Project</a>
+            <div>{{ $ctrl.firstname}}</div>
+            <div>&nbsp;{{ $ctrl.lastname}} </div>
+        </nav>
+    </div>
+</header>
+<div  upgrade-element  class="mdl-layout__drawer">
+    <span class="mdl-layout-title">MT</span>
+    <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" menu-close ui-sref="app.user" href="">User</a>
+        <a class="mdl-navigation__link" menu-close ui-sref="app.project" href="">Project</a>
+    </nav>
+</div>
+</div> -->
+<md-sidenav flex id='sidenav' class="md-sidenav-left md-whiteframe-z2" role="sidenav" md-component-id="left" >
+    <md-toolbar class="md-tall md-hue-2" layout-align="end end">
+        <div class="md-toolbar-tools" layout layout-padding>
+            <md-icon>account_circle</md-icon>
+            <div layout="column" layout-padding>
+                <span class="md-body-2">{{ $ctrl.firstname}}</span>
+                <span class="md-caption">{{ $ctrl.lastname}}</span>
+            </div>
+            <span flex></span>
+                <md-button class="md-icon-button" ng-click="$ctrl.logout()">
+                    <md-icon>exit_to_app</md-icon>
+                </md-button>
+        </div>
+    </md-toolbar>
+    <md-content role="navigation">
+        <md-list>
+            <md-list-item ng-repeat="menu in $ctrl.list" ng-click="$ctrl.hideSidnav()" ui-sref="{{menu.link}}">
+                <md-icon>{{menu.icon}}</md-icon>
+                <p>{{menu.name}}</p>
+                <span flex></span>
+                <md-icon>chevron_right</md-icon>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-sidenav>

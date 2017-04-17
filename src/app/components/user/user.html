@@ -1,0 +1,133 @@
+<md-toolbar role="toolbar">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" toggle-sidenav aria-label="Menu">
+            <md-icon>menu</md-icon>
+        </md-button>
+        <h4 class="md-title">User</h4>
+        <span flex></span>
+        <md-button ng-click="editMode= !(viewUser = !viewUser)" class="md-icon-button">
+            <md-icon>person_add</md-icon>
+        </md-button>
+        <md-button class="md-icon-button" ng-click="getUser()">
+            <md-icon>refresh</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<section id="adduser" class="slide-toggle" ng-show="viewUser" role="content" layout="column" layout-padding>
+    <md-content class="md-whiteframe-z2" ng-cloak>
+        <form name="userDetails" ng-submit="addUser()">
+            <div layout="row" layout-fill style="border-bottom: 3px solid grey; margin-bottom: 20px;">
+                <md-icon style="padding-right:10px">account_box </md-icon>
+                <h2 class="md-headline" flex> Add User </h2>
+            </div>
+            <div layout="row" layout-fill>
+                <md-input-container class="md-icon-float md-block" flex="50">
+                    <md-icon style="font-size: 24px;color: blue;">person</md-icon>
+                    <label>First Name</label>
+                    <input ng-model="user.FirstName" name="firstname" type="text" required>
+                    <div ng-messages="userDetails.firstname.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block" flex="50">
+                    <label>Last Name</label>
+                    <input ng-model="user.LastName" name="lastname" required type="text">
+                    <div ng-messages="userDetails.lastname.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row" layout-fill>
+                <md-input-container class="md-icon-float md-block" flex="50">
+                    <md-icon style="font-size: 24px;color: dark blue;">assignment_ind</md-icon>
+                    <label>SGID</label>
+                    <input ng-disabled="editMode" ng-model="user.SGID" name="sgid" required type="text">
+                    <div ng-messages="userDetails.sgid.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block" flex="50">
+                    <label>Role</label>
+                    <md-select ng-model="user.Role" name="role" required>
+                        <!--  <md-option ng-repeat="state in states" value="{{state.abbrev}}">
+                {{state.abbrev}}
+                              </md-option> -->  
+                        <md-option value="Admin">
+                            Admin
+                        </md-option>
+                        <md-option value="User">
+                            User
+                        </md-option>
+                        <md-option value="HR">
+                            HR
+                        </md-option>
+                    </md-select>
+                    <div ng-messages="userDetails.role.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row" layout-fill>
+                <span flex></span>
+                <md-button class="md-raised md-primary" ng-disabled="userDetails.$invalid" type="submit">Submit</md-button>
+                <md-button class="md-raised md-primary" ng-click="viewUser = !viewUser">Cancel</md-button>
+            </div>
+        </form>
+    </md-content>
+</section> 
+<section id="user" role="content" layout="column" layout-padding md-scroll-y>
+    <!-- <dttable json="json"></dttable> -->  
+   <!--  <md-toolbar  class="md-small-tall md-hue-3" ng-show="selected.length">
+        <div class="md-toolbar-tools">
+            <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
+            <span flex></span>
+             <md-button class="md-icon-button" ng-click="edit($event)" ng-show="selected.length && selected.length<=1">
+                <md-icon style="color:white;">edit</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" ng-click="delete($event)">
+                <md-icon style="color:white;">delete</md-icon>
+            </md-button> 
+        </div>
+    </md-toolbar> -->
+    <md-content class="md-whiteframe-z2" ng-cloak>
+      <div layout="row" layout-fill>
+            <div flex class="action" layout="row" layout-align="end center">
+                <md-button class="md-icon-button" ng-click="edit($event)" ng-show="selected.length && selected.length<=1">
+                    <md-icon>edit</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="delete($event)" ng-show="selected.length">
+                    <md-icon>delete</md-icon>
+                </md-button>
+            </div>
+        </div>
+        <md-table-container>
+            <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+                <thead md-head md-order="query.order" md-on-reorder="getUser">
+                    <tr md-row>
+                        <!-- <th md-column md-order-by="nameToLower"><span>Dessert (100g serving)</span></th> -->
+                        <!-- <th md-column md-numeric md-order-by="calories.value"><span>Calories</span></th> -->
+                        <th md-column >First Name</th>
+                        <th md-column>Last Name</th>
+                        <th md-column>Role</th>
+                        <th md-column>SGID</th>
+                        <!-- <th md-column md-numeric>Calcium (%)</th> -->
+                        <!-- <th md-column md-numeric>Iron (%)</th> -->
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row md-select="user" md-select-id="name" md-auto-select ng-repeat="user in users">
+                        <td md-cell>{{user.FirstName}}</td>
+                        <td md-cell>{{user.LastName}}</td>
+                        <td md-cell>{{user.Role}}</td>
+                        <td md-cell>{{user.SGID}}</td>
+                        <!-- <td md-cell>{{dessert.protein.value | number: 1}}</td> -->
+                        <!-- <td md-cell>{{dessert.sodium.value}}</td> -->
+                        <!-- <td md-cell>{{dessert.calcium.value}}{{dessert.calcium.unit}}</td> -->
+                        <!-- <td md-cell>{{dessert.iron.value}}{{dessert.iron.unit}}</td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+    </md-content>
+    <!--  <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{users.length}}" md-on-paginate="getDesserts" md-page-select></md-table-pagination> -->
+</section>

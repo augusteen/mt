@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <title>SOAP JavaScript Client Test</title>
+    <script type="text/javascript">
+    function soap() {
+        Download();
+    }
+
+    function downloadURL(url) {
+        var hiddenIFrameID = 'hiddenDownloader',
+            iframe = document.getElementById(hiddenIFrameID);
+        if (iframe === null) {
+            iframe = document.createElement('iframe');
+            iframe.id = hiddenIFrameID;
+            iframe.style.display = 'none';
+            iframe.onload = function() {
+                alert('Download completed.');
+            };
+            document.body.appendChild(iframe);
+        }
+        iframe.src = url;
+    }
+    </script>
+</head>
+
+<body>
+    <form name="Demo" action="" method="post">
+        <div>
+            <input type="button" value="Soap" onclick="soap();" />
+            <a href="https://saintgobain.service-now.com/time_card_list.do?&CSV&sysparm_query=week_starts_on=2017-02-13" download>link</a>
+
+            <a href="https://saintgobain.service-now.com/api/now/table/task?sysparm_limit=10" download> link</a>
+        </div>
+    </form>
+    <button onclick="downloadURL('https://saintgobain.service-now.com/api/now/table/time_card?week_starts_on=2017-02-13');">Download</button>
+    <iframe id="my_iframe" style="display:none;">
+    </iframe>
+    <script>
+    function Download() {
+        document.getElementById('my_iframe').src = 'https://saintgobain.service-now.com/time_card_list.do?week_starts_on=2017-02-13&CSV';
+    };
+    </script>
+</body>
+<html>

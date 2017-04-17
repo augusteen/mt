@@ -1,0 +1,20 @@
+user{
+    .md-row {
+        height: 35px!important;
+    }
+    .md-table:not(.md-row-select) td.md-cell:nth-child(n+2):nth-last-child(n+2), .md-table:not(.md-row-select) th.md-column:nth-child(n+2):nth-last-child(n+2) {
+		padding: 0px 20px 0px 0px!important;
+	}
+
+	table:not(.md-row-select) th.md-column:first-child{
+		padding: 0px 20px!important;
+	}
+
+	.filter{
+		padding-left:20px;
+	}
+
+	.action{
+		padding-right:10px
+	}
+}

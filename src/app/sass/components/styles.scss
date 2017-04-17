@@ -1,0 +1,21 @@
+app.ng-scope{
+  height: 100%;
+}
+
+.slide-toggle {
+  overflow: hidden;
+  transition: all 2.5s; 
+}
+
+.pgbar {
+	display:none;
+}
+
+.bkimage {
+	background-image : url('../src/resource/image/bkimage.jpg');
+	 background-repeat: no-repeat;
+}
+
+.dtontoolbr .md-datepicker-input {
+	color: white;
+}

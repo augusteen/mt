@@ -1,0 +1,111 @@
+<!-- <dttable
+    json="json"
+></dttable> -->
+<md-toolbar role="toolbar">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" toggle-sidenav aria-label="Menu">
+            <md-icon>menu</md-icon>
+        </md-button>
+        <h4 class="md-title">Project</h4>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="viewProject = !viewProject">
+            <md-icon>group_add</md-icon>
+        </md-button>
+        <input type="file" id="upload_file" ngf-select="uploadFile($files)" class="ng-hide" name="file">
+        <label for="upload_file" class="md-button">
+            <md-icon>file_upload</md-icon>
+        </label>
+        <md-button class="md-icon-button" ng-click="getProject()">
+            <md-icon>refresh</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<section id="addproject" class="slide-toggle" ng-show="viewProject" role="content" layout="column" layout-padding>
+    <md-content class="md-whiteframe-z2" ng-cloak>
+        <form name="projectDetails" ng-submit="addProject()">
+            <div layout="row" layout-fill style="border-bottom: 3px solid grey; margin-bottom: 20px;">
+                <md-icon style="padding-right:10px">group_work</md-icon>
+                <h2 class="md-headline" flex> Add Project </h2>
+            </div>
+            <div layout="column" layout-fill>
+                <md-input-container class="md-icon-float md-block" flex="50">
+                    <label>Project Name</label>
+                    <input ng-model="project.Project_Name" name="projectname" type="text" required>
+                    <div ng-messages="projectDetails.projectname.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-icon-float md-block" flex="50">
+                    <label>Description</label>
+                    <textarea ng-model="project.Description" name="description" md-maxlength="150" rows="2" md-select-on-focus></textarea>
+                    <div ng-messages="projectDetails.description.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row" layout-fill>
+                <span flex></span>
+                <md-button class="md-raised md-primary" ng-disabled="projectDetails.$invalid" type="submit">Submit</md-button>
+                <md-button class="md-raised md-primary" ng-click="viewProject = !viewProject">Cancel</md-button>
+            </div>
+        </form>
+    </md-content>
+</section>
+<section id="content" role="content" layout="column" layout-padding md-scroll-y>
+    <!-- <dttable json="json"></dttable> -->
+    <md-toolbar class="md-small-tall md-hue-3" ng-show="selected.length">
+        <div class="md-toolbar-tools">
+            <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="edit($event)" ng-show="selected.length && selected.length<=1">
+                <md-icon style="color:white;">edit</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" ng-click="delete($event)">
+                <md-icon style="color:white;">delete</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content class="md-whiteframe-z2" ng-cloak>
+      <!--   <div layout="row" layout-fill>
+            <div flex class="action" layout="row" layout-align="end center">
+                <md-button class="md-icon-button" ng-click="edit($event)" ng-show="selected.length && selected.length<=1">
+                    <md-icon>edit</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="delete($event)" ng-show="selected.length">
+                    <md-icon>delete</md-icon>
+                </md-button>
+            </div>
+        </div> -->
+        <md-table-container>
+            <table md-table multiple ng-model="selected" md-progress="promise">
+                <thead md-head md-order="query.order" md-on-reorder="getProject">
+                    <tr md-row>
+                        <!-- <th md-column md-order-by="nameToLower"><span>Dessert (100g serving)</span></th> -->
+                        <!-- <th md-column md-numeric md-order-by="calories.value"><span>Calories</span></th> -->
+                        <th md-column>Project Name</th>
+                        <th md-column>Task Id</th>
+                        <th md-column>Description</th>
+                        <th md-column>Start Date</th>
+                        <th md-column>End Date</th>
+                        <!-- <th md-column md-numeric>Calcium (%)</th> -->
+                        <!-- <th md-column md-numeric>Iron (%)</th> -->
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row md-select="project" md-select-id="name" md-auto-select ng-repeat="project in projects">
+                        <td md-cell>{{project.project_name}}</td>
+                        <td md-cell>{{project.task_id}}</td>
+                        <td md-cell>{{project.description}}</td>
+                        <td md-cell>{{project.start_date}}</td>
+                        <td md-cell>{{project.end_date}}</td>
+                        <!-- <td md-cell>{{dessert.protein.value | number: 1}}</td> -->
+                        <!-- <td md-cell>{{dessert.sodium.value}}</td> -->
+                        <!-- <td md-cell>{{dessert.calcium.value}}{{dessert.calcium.unit}}</td> -->
+                        <!-- <td md-cell>{{dessert.iron.value}}{{dessert.iron.unit}}</td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+    </md-content>
+    <!--  <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{users.length}}" md-on-paginate="getDesserts" md-page-select></md-table-pagination> -->
+</section>
