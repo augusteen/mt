@@ -1,4 +1,4 @@
-function TaskController($scope, $api, $mdDialog, LoginService, Upload) {
+function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload) {
 
     var root = $scope.$root,
         durl = 'https://saintgobain.service-now.com/time_card_list.do?&CSV&sysparm_query=week_starts_on>=';
@@ -38,15 +38,26 @@ function TaskController($scope, $api, $mdDialog, LoginService, Upload) {
             url: APIURL + 'api/timecardupload',
             file: $files[0],
             // headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
-        }).progress(function(e) {
-            console.log(e);
-        }).then(function(data, status, headers, config) {
+        }).then(function(resp) {
             // file is uploaded successfully
-            console.log(status);
-            $scope.uploadedData = data.data;
-
+            // console.log(status);
+            $scope.uploadedData = resp.data;
+            $scope.showToast();
+        }, function(resp) {
+            console.log(resp);
+        }, function(evt) {
+            console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.data.file.name);
         });
     }
+
+    $scope.showToast = function() {
+        $mdToast.show({
+            hideDelay: 3000,
+            position: 'top right',
+            // controller: 'ToastController',
+            templateUrl: 'app/common/toast/toast.html'
+        });
+    };
     $scope.getWeeks = function(num) {
         return new Array(num);
     }

@@ -52,21 +52,9 @@
     </md-content>
 </section>
 <section id="content" role="content" layout="column" layout-padding md-scroll-y>
-    <!-- <dttable json="json"></dttable> -->
-    <md-toolbar class="md-small-tall md-hue-3" ng-show="selected.length">
-        <div class="md-toolbar-tools">
-            <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
-            <span flex></span>
-            <md-button class="md-icon-button" ng-click="edit($event)" ng-show="selected.length && selected.length<=1">
-                <md-icon style="color:white;">edit</md-icon>
-            </md-button>
-            <md-button class="md-icon-button" ng-click="delete($event)">
-                <md-icon style="color:white;">delete</md-icon>
-            </md-button>
-        </div>
-    </md-toolbar>
+
     <md-content class="md-whiteframe-z2" ng-cloak>
-      <!--   <div layout="row" layout-fill>
+        <!--   <div layout="row" layout-fill>
             <div flex class="action" layout="row" layout-align="end center">
                 <md-button class="md-icon-button" ng-click="edit($event)" ng-show="selected.length && selected.length<=1">
                     <md-icon>edit</md-icon>
