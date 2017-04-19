@@ -31,7 +31,6 @@ function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload)
 
         return day == 1;
     }
-
     $scope.uploadFile = function($files) {
         // console.log('uploading');
         Upload.upload({
