@@ -8,14 +8,7 @@
         <md-button ng-click="viewTask = !viewTask" class="md-icon-button">
             <md-icon>add_circle</md-icon>
         </md-button>
-        <!--         <md-button class="md-icon-button" ng-click="getTask()">
-            <md-icon>refresh</md-icon>
-        </md-button>
-         -->
         <md-datepicker class="dtontoolbr" ng-change="datechange()" ng-model="todaysDate" md-date-filter="onlyMonday" md-placeholder="Enter date"></md-datepicker>
-        <!--    <a id="download_file" class="ng-hide" href="https://saintgobain.service-now.com/time_card_list.do?&CSV&sysparm_query=week_starts_on=2017-02-13" download>
-        </a>
- -->
         <md-button ng-href="{{durl}}" target="_blank">
             <md-icon>file_download</md-icon>
         </md-button>
