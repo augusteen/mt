@@ -8,8 +8,8 @@
     </div>
     </div>
 </md-toolbar>
-<section id="home" role="content" ng-show="viewHome" layout="column" layout-padding>
-    <md-content class="md-whiteframe-z2" ng-cloak>
+<section id="home" role="content" ng-show="viewHome" layout="row" layout-padding>
+    <md-content flex class="md-whiteframe-z2" ng-cloak>
         <table md-table multiple ng-model="selected" md-progress="promise">
             <thead md-head md-order="query.order" md-on-reorder="getProject">
                 <tr md-row>
@@ -28,11 +28,13 @@
             </tbody>
         </table>
     </md-content>
-  
+    <md-content flex="40" class="md-whiteframe-z2">
+        <div id="chartdiv"></div>
+    </md-content>
 </section>
 
 <section id="home" role="content" ng-show="viewHome" layout="column" layout-padding>
-  <md-content class="md-whiteframe-z2" ng-cloak>
+    <md-content class="md-whiteframe-z2" ng-cloak>
         <table md-table multiple ng-model="selected" md-progress="promise">
             <thead md-head md-order="query.order" md-on-reorder="getProject">
                 <tr md-row>

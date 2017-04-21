@@ -1,17 +1,20 @@
-home{
-	.md-row{
-		height: 30px!important;
-	}
-
-	.md-table:not(.md-row-select) td.md-cell:nth-child(n+2):nth-last-child(n+2), .md-table:not(.md-row-select) th.md-column:nth-child(n+2):nth-last-child(n+2) {
-		padding: 0px 0px 0px 0px!important;
-	}
-
-	table:not(.md-row-select) th.md-column:first-child{
-		padding: 0px 0px!important;
-	}
-
-	table.md-table:not(.md-row-select) td.md-cell:first-child, table.md-table:not(.md-row-select) th.md-column:first-child{
-		padding: 0px 0px!important;
-	}
+home {
+    .md-row {
+        height: 30px!important;
+    }
+    .md-table:not(.md-row-select) td.md-cell:nth-child(n+2):nth-last-child(n+2),
+    .md-table:not(.md-row-select) th.md-column:nth-child(n+2):nth-last-child(n+2) {
+        padding: 0px 0px 0px 0px!important;
+    }
+    table:not(.md-row-select) th.md-column:first-child {
+        padding: 0px 0px!important;
+    }
+    table.md-table:not(.md-row-select) td.md-cell:first-child,
+    table.md-table:not(.md-row-select) th.md-column:first-child {
+        padding: 0px 0px!important;
+    }
+    #chartdiv {
+        width: 100%;
+        height: 100%;
+    }
 }

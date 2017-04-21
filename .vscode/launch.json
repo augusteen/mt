@@ -8,7 +8,7 @@
         "request": "launch",
         "name": "Launch Grunt",
         "args": ["dev"],
-        "program": "${env:APPDATA}\\npm\\node_modules\\grunt-cli\\bin\\grunt",
+        "program": "${env.APPDATA}\\npm\\node_modules\\grunt-cli\\bin\\grunt",
         "stopOnEntry": true,
         "cwd": "${workspaceRoot}"
     }]
