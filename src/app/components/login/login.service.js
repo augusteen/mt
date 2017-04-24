@@ -1,4 +1,4 @@
-function LoginService($rootScope,$state, $http, $q) {
+function LoginService($rootScope, $state, $http, $q) {
 
     // this.request = function(){
     //  console.log($http);
@@ -9,6 +9,7 @@ function LoginService($rootScope,$state, $http, $q) {
         authenticate: authenticate,
         hasToken: hasToken,
         getUser: getUser,
+        getUserName: getUserName,
         removeToken: removeToken
     });
 
@@ -16,7 +17,7 @@ function LoginService($rootScope,$state, $http, $q) {
 
         var request = $http({
             method: "post",
-            url: APIURL + './authenticate',//"http://localhost:3000/authenticate",
+            url: APIURL + './authenticate', //"http://localhost:3000/authenticate",
             data: {
                 username: formdata.sgid,
                 password: formdata.password
@@ -28,7 +29,7 @@ function LoginService($rootScope,$state, $http, $q) {
     function handleSuccess(response) {
 
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user',JSON.stringify(response.data.user));
+        localStorage.setItem('user', JSON.stringify(response.data.user));
         return (response.data);
     }
 
@@ -47,7 +48,12 @@ function LoginService($rootScope,$state, $http, $q) {
         return JSON.parse(localStorage.getItem('user'));
     }
 
-    function removeToken(){
+    function getUserName() {
+        var user = getUser();
+        return user.lastname.toLowerCase() + ', ' + user.firstname.toLowerCase();
+    }
+
+    function removeToken() {
         localStorage.removeItem('token');
     }
 }
@@ -55,4 +61,4 @@ function LoginService($rootScope,$state, $http, $q) {
 
 angular
     .module('components')
-    .service('LoginService', ['$rootScope','$state', '$http', '$q', LoginService]);
+    .service('LoginService', ['$rootScope', '$state', '$http', '$q', LoginService]);

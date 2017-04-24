@@ -36,7 +36,8 @@ function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload)
         Upload.upload({
             url: APIURL + 'api/timecardupload',
             file: $files[0],
-            // headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+            method: 'PUT'
+                // headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
         }).then(function(resp) {
             // file is uploaded successfully
             // console.log(status);
@@ -113,7 +114,7 @@ function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload)
 
         if ($scope.taskDetails.$valid) {
             // $pgbar.setVisible(true);
-            $scope.task.SGID = LoginService.getUser().lastname + '' + LoginService.getUser().firstname.toUpperCase();
+            $scope.task.SGID = LoginService.getUserName();
             root.$pgVisible(true);
             if (!$scope.editMode)
                 $api.task.save($scope.task, saveSuccess);
@@ -140,7 +141,7 @@ function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload)
     $scope.getTask = function() {
         var tsk = {};
         if (!$scope.filter) {
-            tsk.name = LoginService.getUser().lastname + ' ' + LoginService.getUser().firstname.toUpperCase();
+            tsk.name = LoginService.getUserName();
         } else {
             tsk.name = $scope.filter.User;
         }
@@ -195,6 +196,8 @@ function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload)
     $scope.getProject();
     $scope.getTask();
     $scope.getUser();
+
+
 }
 
 angular

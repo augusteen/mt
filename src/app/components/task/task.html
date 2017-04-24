@@ -123,8 +123,8 @@
                 <md-input-container flex="40" layout="row" class="md-block">
                     <label>User</label>
                     <md-select ng-model="filter.User" name="LastName">
-                        <md-option ng-repeat="usr in users" value="{{usr.LastName}} {{usr.FirstName.toUpperCase()}}">
-                            {{usr.LastName}} {{usr.FirstName.toUpperCase()}}
+                        <md-option ng-repeat="usr in users" value="{{usr.LastName.toLowerCase()}}, {{usr.FirstName.toLowerCase()}}">
+                            {{usr.LastName}}, {{usr.FirstName.toUpperCase()}}
                         </md-option>
                     </md-select>
                 </md-input-container>
