@@ -1,7 +1,8 @@
-function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload) {
-
+function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload, $resource) {
     var root = $scope.$root,
-        durl = 'https://saintgobain.service-now.com/time_card_list.do?&CSV&sysparm_query=week_starts_on>=';
+        durl = 'https://saintgobain.service-now.com/time_card_list.do?&CSV&sysparm_query=week_starts_on>=',
+        originatorEv;
+
     $scope.orig = angular.copy($scope.user);
     $scope.viewTask = false;
     $scope.selected = [];
@@ -14,14 +15,12 @@ function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload)
     $scope.weeks = 52;
     $scope.uploadedData = [];
     $scope.todaysDate = new Date();
-    var originatorEv;
 
     $scope.openMenu = function($mdOpenMenu, ev) {
         originatorEv = ev;
         $mdOpenMenu(ev);
     };
     $scope.datechange = function() {
-
         $scope.durl = durl + moment($scope.todaysDate).format('YYYY-MM-DD');
         console.log($scope.durl);
         // console.log(moment(date).format('YYYY-MM-DD'));
@@ -29,7 +28,7 @@ function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload)
     $scope.onlyMonday = function(date) {
         var day = date.getDay();
 
-        return day == 1;
+        return day === 1;
     }
     $scope.uploadFile = function($files) {
         // console.log('uploading');
@@ -77,23 +76,20 @@ function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload)
             targetEvent: event,
             locals: {
                 items: holder
-            },
+            }
             // templateUrl: 'app/........dialog.html'
-        }).then();
+        });
     };
     $scope.delete = function() {
         // console.log($scope.selected);
         // $pgbar.setVisible(true);
         root.$pgVisible(true);
         angular.forEach($scope.selected, function(item) {
-
             console.log(item);
             var deletes = {};
             deletes.tskid = item.TSKID;
             $api.taskupdate.remove(deletes, saveSuccess);
         });
-
-
     }
     $scope.edit = function() {
         console.log($scope.selected);
@@ -107,24 +103,18 @@ function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload)
     }
 
     $scope.addTask = function() {
-
-
         $scope.taskDetails.$setSubmitted()
-
 
         if ($scope.taskDetails.$valid) {
             // $pgbar.setVisible(true);
             $scope.task.SGID = LoginService.getUserName();
             root.$pgVisible(true);
-            if (!$scope.editMode)
-                $api.task.save($scope.task, saveSuccess);
-            else {
+            if (!$scope.editMode) { $api.task.save($scope.task, saveSuccess); } else {
                 //var sgid = $scope.user.SGID;
                 //var query = {}
                 $api.taskupdate.update($scope.task, saveSuccess);
             }
         }
-
     }
 
     $scope.getProject = function() {
@@ -156,7 +146,6 @@ function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload)
         // $pgbar.setVisible(false);
         root.$pgVisible(false)
         if (data.status) {
-
             $mdDialog.show(
                 $mdDialog.alert()
                 .parent(angular.element(document.querySelector('#root')))
@@ -184,22 +173,16 @@ function TaskController($scope, $api, $mdToast, $mdDialog, LoginService, Upload)
 
     $scope.getUser = function() {
         $scope.promise = $api.user.query('', successUser).$promise;
-    };
+    }
 
     function successUser(users) {
         $scope.users = users;
     }
-
-    function success(tasks) {
-        $scope.tasks = tasks;
-    }
     $scope.getProject();
     $scope.getTask();
     $scope.getUser();
-
-
 }
-
+TaskController.$inject = ['$scope', '$api', '$mdToast', '$mdDialog', 'LoginService', 'Upload', '$resource'];
 angular
     .module('components')
     .controller('TaskController', TaskController);

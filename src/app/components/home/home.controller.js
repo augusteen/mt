@@ -1,5 +1,18 @@
-function HomeController($scope, $api) {
+function HomeController($scope, $api, $resource) {
 
+    var LeaveData = $resource(APIURL + 'api/timcardleave', null, {
+        query: { method: 'POST' }
+    });
+
+    $scope.getLeave = function() {
+        LeaveData.query({
+            week: ['2017-04-24', '2017-04-17']
+        }, function success(data) {
+            $scope.leave = data;
+        }, function error(err) {
+            console.log(err);
+        });
+    }
     $scope.viewHome = function() {
         $api.resrc('api/timecardtask', {
             query: {
@@ -111,6 +124,7 @@ function HomeController($scope, $api) {
             "type": "column"
         }]
     });
+    $scope.getLeave();
 }
 
 angular

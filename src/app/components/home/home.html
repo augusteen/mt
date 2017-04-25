@@ -52,5 +52,23 @@
                 </tr>
             </tbody>
         </table>
+
+        <table md-table multiple ng-model="selected" md-progress="promise">
+            <thead md-head md-order="query.order" md-on-reorder="getLeave">
+                <tr md-row>
+                    <th md-column>User</th>
+                    <th md-column ng-repeat="wk in week">{{getWeekNumber(wk)}}</th>
+                </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row md-select-id="name" md-auto-select ng-repeat="lv in leave">
+                    <td md-cell>{{lv.Name}}</td>
+                    <td md-cell ng-repeat="wk in week">
+                        {{(lv.week[wk]).toFixed(0)}}
+                        <span ng-if="lv.week[wk] > 0">%</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </md-content>
 </section>
