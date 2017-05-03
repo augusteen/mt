@@ -10,11 +10,12 @@
 </md-toolbar>
 <section id="home" role="content" ng-show="viewHome" layout="row" layout-padding>
     <md-content flex class="md-whiteframe-z2" ng-cloak>
+        <md-subheader class="md-primary">Project Utilization</md-subheader>
         <table md-table multiple ng-model="selected" md-progress="promise">
             <thead md-head md-order="query.order" md-on-reorder="getProject">
                 <tr md-row>
                     <th md-column>Project</th>
-                    <th md-column ng-repeat="wk in projectweek">{{getWeekNumber(wk)}}</th>
+                    <th md-column ng-repeat="wk in projectweek">{{$ctrl.getWeekNumber(wk)}}</th>
                 </tr>
             </thead>
             <tbody md-body>
@@ -32,43 +33,60 @@
         <div id="chartdiv"></div>
     </md-content>
 </section>
-
-<section id="home" role="content" ng-show="viewHome" layout="column" layout-padding>
-    <md-content class="md-whiteframe-z2" ng-cloak>
-        <table md-table multiple ng-model="selected" md-progress="promise">
-            <thead md-head md-order="query.order" md-on-reorder="getProject">
-                <tr md-row>
-                    <th md-column>User</th>
-                    <th md-column ng-repeat="wk in week">{{getWeekNumber(wk)}}</th>
-                </tr>
-            </thead>
-            <tbody md-body>
-                <tr md-row md-select-id="name" md-auto-select ng-repeat="time in timecard">
-                    <td md-cell>{{time.Name}}</td>
-                    <td md-cell ng-repeat="wk in week">
-                        {{(time.week[wk]).toFixed(0)}}
-                        <span ng-if="time.week[wk] > 0">%</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table md-table multiple ng-model="selected" md-progress="promise">
-            <thead md-head md-order="query.order" md-on-reorder="getLeave">
-                <tr md-row>
-                    <th md-column>User</th>
-                    <th md-column ng-repeat="wk in week">{{getWeekNumber(wk)}}</th>
-                </tr>
-            </thead>
-            <tbody md-body>
-                <tr md-row md-select-id="name" md-auto-select ng-repeat="lv in leave">
-                    <td md-cell>{{lv.Name}}</td>
-                    <td md-cell ng-repeat="wk in week">
-                        {{(lv.week[wk]).toFixed(0)}}
-                        <span ng-if="lv.week[wk] > 0">%</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<!--
+    Scrollable horizontal section with mousewheel scroll left and right
+    <section class="card" (wheel)="wheel($event)">
+    <div class="card--content"></div>
+    <div class="card--content"></div>
+    <div class="card--content"></div>
+    <div class="card--content"></div>
+    <div class="card--content"></div>
+    <div class="card--content"></div>
+    <div class="card--content"></div>
+    <div class="card--content"></div>
+    <div class="card--content"></div>
+    <div class="card--content"></div>
+</section>-->
+<section id="home" role="content" ng-show="viewHome" layout="coloumn" layout-padding>
+    <md-content class="md-whiteframe-z2" layout="row" flex ng-cloak>
+        <md-content flex="50">
+            <md-subheader class="md-primary">User Utilization</md-subheader>
+            <table md-table multiple flex ng-model="selected" md-progress="promise">
+                <thead md-head md-order="query.order" md-on-reorder="getProject">
+                    <tr md-row>
+                        <th md-column>User</th>
+                        <th md-column ng-repeat="wk in week">{{$ctrl.getWeekNumber(wk)}}</th>
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row md-select-id="name" md-auto-select ng-repeat="time in timecard">
+                        <td md-cell start-case>{{time.Name}}</td>
+                        <td md-cell ng-repeat="wk in week">
+                            {{(time.week[wk]).toFixed(0)}}
+                            <span ng-if="time.week[wk] > 0">%</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-content>
+        <md-content flex="50">
+            <md-subheader class="md-primary">Leave Report</md-subheader>
+            <table md-table flex multipleng-model="selected" md-progress="promise">
+                <thead md-head md-order="query.order" md-on-reorder="getLeave">
+                    <tr md-row>
+                        <th md-column>User</th>
+                        <th md-column ng-repeat="wk in leaveWeek">{{$ctrl.getWeekNumber(wk)}}</th>
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row md-select-id="name" md-auto-select ng-repeat="lv in leaveTask">
+                        <td md-cell start-case>{{lv.Name}}</td>
+                        <td md-cell ng-repeat="wk in leaveWeek">
+                            {{lv.week[wk]}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-content>
     </md-content>
 </section>

@@ -1,4 +1,7 @@
 home {
+    #home {
+        min-height: 40%;
+    }
     .md-row {
         height: 30px!important;
     }
@@ -16,5 +19,23 @@ home {
     #chartdiv {
         width: 100%;
         height: 100%;
+    }
+    content {
+        min-height: 40%;
+    }
+    .card {
+        display: flex;
+        background-color: yellowgreen;
+        min-width: 100%;
+        min-height: 200px;
+        overflow-x: auto;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+    .card--content {
+        background-color: #e74c3c;
+        min-width: 200px;
+        margin: 5px;
     }
 }

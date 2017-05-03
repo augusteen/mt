@@ -1,6 +1,6 @@
 function UserController($scope, $api, $mdDialog) {
     // var ctrl = this;
-    
+
     var root = $scope.$root;
     $scope.orig = angular.copy($scope.user);
     $scope.viewUser = false;
@@ -13,11 +13,11 @@ function UserController($scope, $api, $mdDialog) {
         // $pgbar.setVisible(true);
         root.$pgVisible(true);
         angular.forEach($scope.selected, function(item) {
-            
+
             console.log(item);
             var deletes = {};
             deletes.sgid = item.SGID;
-             $api.userupdate.remove(deletes, saveSuccess);
+            $api.userupdate.remove(deletes, saveSuccess);
         });
 
 
@@ -38,7 +38,7 @@ function UserController($scope, $api, $mdDialog) {
 
         $scope.userDetails.$setSubmitted()
 
-        $scope.fetchsnid();
+        // $scope.fetchsnid();
         if ($scope.userDetails.$valid) {
             // $pgbar.setVisible(true);
             root.$pgVisible(true);
@@ -50,14 +50,15 @@ function UserController($scope, $api, $mdDialog) {
                 $api.userupdate.update($scope.user, saveSuccess);
             }
         }
-       
+
     }
-    function snowsuccess(data){
-        console.log(data);
-    }
-    $scope.fetchsnid = function(){
-        $api.servicenow.fetch($scope.user.SGID,snowsuccess);
-    }
+
+    // function snowsuccess(data) {
+    //     console.log(data);
+    // }
+    // $scope.fetchsnid = function(){
+    //     $api.servicenow.fetch($scope.user.SGID,snowsuccess);
+    // }
     $scope.getUser = function() {
         $scope.promise = $api.user.query('', success).$promise;
     };

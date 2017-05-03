@@ -1,14 +1,29 @@
-function HomeController($scope, $api, $resource) {
-
-    var LeaveData = $resource(APIURL + 'api/timcardleave', null, {
-        query: { method: 'POST' }
-    });
-
+function HomeController($element, $scope, $api, $resource) {
+    var self = this,
+        chartData = [],
+        LeaveData = $resource(APIURL + 'api/timcardleave', null, {
+            query: { method: 'POST' }
+        });
+    self.getWeekNumber = getWeekNumber;
+    self.startCase = startCase;
+    //getLeave Data 
     $scope.getLeave = function() {
         LeaveData.query({
-            week: ['2017-04-24', '2017-04-17']
+            week: getLastFourMonday() //['2017-04-24', '2017-04-17']
         }, function success(data) {
-            $scope.leave = data;
+            //Calculate Mean with loadash
+            _.forEach(data.task, function(task) {
+                task.week.Sum = _.sumBy(_.values(task.week));
+            });
+            $scope.leaveTask = data.task;
+            //sort week days function
+            data.week.sort(function(left, right) {
+                return moment.utc(left).diff(moment.utc(right));
+            });
+            //sort the array
+            data.week.sort();
+            data.week.push('Sum');
+            $scope.leaveWeek = data.week;
         }, function error(err) {
             console.log(err);
         });
@@ -16,114 +31,86 @@ function HomeController($scope, $api, $resource) {
     $scope.viewHome = function() {
         $api.resrc('api/timecardtask', {
             query: {
-                method: 'GET',
-                params: {
-                    name: '@name',
-                    date: '@date'
-                }
+                method: 'POST'
             }
-        }).query('', success).$promise;
+        }).query({ week: getLastFourMonday() }, success).$promise;
     }
 
     function success(data) {
+        _.forEach(data.task, function(task) {
+            task.week.Avg = _.meanBy(_.values(task.week));
+        });
         $scope.timecard = data.task;
+        data.week.push('Avg');
         $scope.week = data.week;
     }
 
     $scope.viewProject = function() {
         $api.resrc('api/timecardproject', {
             query: {
-                method: 'GET'
+                method: 'POST'
             }
-        }).query('', getProject).$promise;
+        }).query({ week: getLastFourMonday() }, getProject).$promise;
     }
 
     function getProject(data) {
+        _.forEach(data.task, function(task) {
+            task.week.Avg = _.meanBy(_.values(task.week));
+            chartData.push({
+                project: task.Name,
+                week: _.round(task.week.Avg, 1)
+            });
+        });
         $scope.project = data.task;
+        data.week.push('Avg');
         $scope.projectweek = data.week;
+
+        AmCharts.makeChart('chartdiv', {
+            'type': 'serial',
+            'theme': 'light',
+            'dataProvider': chartData,
+            'categoryField': 'project',
+            'categoryAxis': {
+                'gridPosition': 'start'
+            },
+            'rotate': true,
+            'graphs': [{
+                'valueField': 'week',
+                'title': 'Utilization',
+                'type': 'column',
+                'labelText': '[[value]]',
+                'fillAlphas': 0.8,
+                'fillColors': '#c5cae9'
+            }]
+        });
     }
 
-    $scope.getWeekNumber = function(d) {
-        // Copy date so don't modify original
-        d = new Date(d);
-        d = new Date(+d);
-        d.setHours(0, 0, 0, 0);
-        // Set to nearest Thursday: current date + 4 - current day number
-        // Make Sunday's day number 7
-        d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-        // Get first day of year
-        var yearStart = new Date(d.getFullYear(), 0, 1);
-        // Calculate full weeks to nearest Thursday
-        var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-        // Return array of year and week number
-        return 'W' + weekNo;
+    function getWeekNumber(d) {
+        if (moment(d, 'YYYY-MM-DD', true).isValid()) {
+            return 'W' + moment(d).isoWeek();
+        } else {
+            return d;
+        }
     }
 
+    function getMonday(d) {
+        return moment(new Date()).startOf('isoWeek').format('YYYY-MM-DD');
+    }
+
+    function getLastFourMonday() {
+        var arr = [],
+            i;
+        for (i = 1; i <= 5; i++) {
+            arr.push(moment(getMonday()).subtract(7 * i, 'days').format('YYYY-MM-DD'));
+        }
+        return arr;
+    }
     $scope.viewHome();
     $scope.viewProject();
 
-    var chartData = [{
-        "country": "USA",
-        "visits": 4252
-    }, {
-        "country": "China",
-        "visits": 1882
-    }, {
-        "country": "Japan",
-        "visits": 1809
-    }, {
-        "country": "Germany",
-        "visits": 1322
-    }, {
-        "country": "UK",
-        "visits": 1122
-    }, {
-        "country": "France",
-        "visits": 1114
-    }, {
-        "country": "India",
-        "visits": 984
-    }, {
-        "country": "Spain",
-        "visits": 711
-    }, {
-        "country": "Netherlands",
-        "visits": 665
-    }, {
-        "country": "Russia",
-        "visits": 580
-    }, {
-        "country": "South Korea",
-        "visits": 443
-    }, {
-        "country": "Canada",
-        "visits": 441
-    }, {
-        "country": "Brazil",
-        "visits": 395
-    }, {
-        "country": "Italy",
-        "visits": 386
-    }, {
-        "country": "Australia",
-        "visits": 384
-    }, {
-        "country": "Taiwan",
-        "visits": 338
-    }, {
-        "country": "Poland",
-        "visits": 328
-    }];
-
-    AmCharts.makeChart("chartdiv", {
-        "type": "serial",
-        "dataProvider": chartData,
-        "categoryField": "country",
-        "graphs": [{
-            "valueField": "visits",
-            "type": "column"
-        }]
-    });
+    function startCase(name) {
+        return _.startCase(name);
+    }
     $scope.getLeave();
 }
 

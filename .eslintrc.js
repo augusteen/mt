@@ -12,7 +12,8 @@ module.exports = {
         "space-before-function-paren": "off",
         "no-trailing-spaces": ["warn"],
         "curly": "warn",
-        "no-tabs": "off"
+        "no-tabs": "off",
+        "eol-last": "off"
     },
     "globals": {
         "Ext": false,
@@ -21,6 +22,10 @@ module.exports = {
         "SitcomSales": false,
         "Sch": false,
         "angular": false,
-        "localStorage": false
+        "localStorage": false,
+        "moment": false,
+        "APIURL": false,
+        "_": false,
+        "AmCharts": false
     }
 };
