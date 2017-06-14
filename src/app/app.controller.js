@@ -1,6 +1,6 @@
 function AppController(LoginService, $state) {
     var ctrl = this;
-    ctrl.firstname =LoginService.getUser().firstname;
+    ctrl.firstname = LoginService.getUser().firstname;
     ctrl.lastname = LoginService.getUser().lastname;
     ctrl.logout = function() {
         LoginService.logout().then(function() {
@@ -12,8 +12,8 @@ function AppController(LoginService, $state) {
         // window.componentHandler.upgradeAllRegistered();
     };
 
-    ctrl.update = function(){
-      // window.componentHandler.upgradeAllRegistered();
+    ctrl.update = function() {
+        // window.componentHandler.upgradeAllRegistered();
     }
 }
 

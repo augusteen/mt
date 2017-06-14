@@ -120,6 +120,8 @@ function HomeController($element, $scope, $api, $resource) {
         });
 
         doc.save('Project_Report.pdf');
+
+        refresh();
     }
 
     function chartImage() {
@@ -179,13 +181,18 @@ function HomeController($element, $scope, $api, $resource) {
         }
         return arr;
     }
-    $scope.viewHome();
-    $scope.viewProject();
 
     function startCase(name) {
         return _.startCase(name);
     }
-    $scope.getLeave();
+
+    function refresh() {
+        chartData = [];
+        $scope.viewHome();
+        $scope.viewProject();
+        $scope.getLeave();
+    }
+    refresh();
 }
 
 angular
