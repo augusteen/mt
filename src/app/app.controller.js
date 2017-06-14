@@ -7,7 +7,9 @@ function AppController(LoginService, $state) {
             $state.go('auth.login');
         });
     };
+    ctrl.test = function() {
 
+    }
     ctrl.$postLink = function() {
         // window.componentHandler.upgradeAllRegistered();
     };
